@@ -38,6 +38,7 @@ void BmpDrawer::openBMP(const string& fileName)
 	cout << "Bit Per Metr: " << fileInfo.biBitCount	 << endl;
 	cout << "Image size: "	 << fileInfo.biSizeImage << endl;
 
+
 	file.close();
 }
 
