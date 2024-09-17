@@ -1,3 +1,0 @@
-C:/Users/ariew/project/bmpPicturePrinter/build/CMakeFiles/drawBmp.dir
-C:/Users/ariew/project/bmpPicturePrinter/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/ariew/project/bmpPicturePrinter/build/CMakeFiles/ZERO_CHECK.dir
