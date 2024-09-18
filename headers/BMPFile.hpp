@@ -11,13 +11,13 @@
 
 using namespace std;
 
-class BmpDrawer {
+class BMPFile {
 public:
-	BmpDrawer();
-	~BmpDrawer();
+	BMPFile();
+	~BMPFile();
 
 	void openBMP(const string& fileName);
-	void displayBMP();
+	void displayBMP() const;
 	void closeBMP();
 
 private:
@@ -56,9 +56,14 @@ private:
 		uint32_t color_space_type{ 0x73524742 };
 		uint32_t unused[16]{ 0 };
 	};
+	
 #pragma pack(pop)
 
 	BMPFileHeader  fileHeader;
 	BMPInfo        fileInfo;
 	BMPColorHeader colorHeader;
+
+	vector<uint8_t> data;
+
+	int rowSize_;
 };

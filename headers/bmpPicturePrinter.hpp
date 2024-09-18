@@ -4,6 +4,6 @@
 #pragma once
 
 #include <iostream>
-#include "bmpDrawer.hpp"
+#include "BMPFile.hpp"
 
 // TODO: Reference additional headers your program requires here.

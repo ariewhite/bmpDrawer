@@ -27,8 +27,9 @@ int main(int argc, char** argv)
 		}
 	}
 	
-	BmpDrawer b;
+	BMPFile b;
 	b.openBMP(path);
+	b.displayBMP();
 	
 	return 0;
 }
