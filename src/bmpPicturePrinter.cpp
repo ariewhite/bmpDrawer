@@ -26,10 +26,13 @@ int main(int argc, char** argv)
 			i++;
 		}
 	}
+
+	cout << "file path - " << path << endl;
 	
 	BMPFile b;
 	b.openBMP(path);
 	b.displayBMP();
+	b.closeBMP();
 	
 	return 0;
 }

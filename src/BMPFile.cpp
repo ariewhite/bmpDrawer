@@ -1,37 +1,40 @@
 ﻿#include "BMPFile.hpp"
 
-BMPFile::BMPFile()
-{
-	cout << "Default constuctor called\n";
+BMPFile::BMPFile() : rowSize_(0)
+{	
 }
 
 BMPFile::~BMPFile()
 {
-	cout << "Destructor called\n";
+	//cout << "Destructor called\n";
+	closeBMP();
 }
-
+/**
+* Метод "открытия" BMP файла
+* Сохраняет данные картинки для дальнейшей отрисовки.
+*/
 void BMPFile::openBMP(const string& fileName)
 {
-	if (!std::filesystem::exists(fileName)) {
-		std::cerr << "File not found: " << fileName << std::endl;
-		exit(EXIT_FAILURE);
+	if (!filesystem::exists(fileName)) {							 
+		throw runtime_error("File not exist!");
 	}
 
-	fstream file(fileName, std:: ios::in | std::ios::binary);
-	if (!file){
-		cerr << "Error opening file\n";
+	fstream file(fileName, ios::in | ios::binary);		   // явно указываем, что хотим "читать файл как бинарный"
+
+	if (!file.is_open()){
 		file.close();
-		exit(EXIT_FAILURE);
+		throw runtime_error("Can not open file!");
 	}
 
-	file.read(reinterpret_cast<char*> (&fileHeader), sizeof(fileHeader));
+	file.read(reinterpret_cast<char*>(&fileHeader), sizeof(fileHeader));    // по хорошему заменить на char* 
+																		    // или вычленять данные из потока по очередно
 
-	if (fileHeader.bfType != 0x4D42){
+	if (fileHeader.bfType != 0x4D42){									    // стандартное начало файла для bitmap 42 4D
 		throw runtime_error("It s not BMP file!");
 	}
 
 	file.read(reinterpret_cast<char*>(&fileInfo), sizeof(fileInfo));
-
+	/*
 	cout << "File size: "	 << fileHeader.bfSize	 << endl;
 	cout << "Width: "		 << fileInfo.biWidth	 << endl;
 	cout << "Height: "		 << fileInfo.biHeight	 << endl;
@@ -39,16 +42,21 @@ void BMPFile::openBMP(const string& fileName)
 	cout << "Image size: "	 << fileInfo.biSizeImage << endl;
 	cout << "Offset: "		 << fileHeader.bfOffBits << endl;
 
-	file.seekg(fileHeader.bfOffBits, std::ios::beg);
-	rowSize_ = (fileInfo.biWidth * fileInfo.biBitCount + 31) / 32 * 4;
+	*/
+	
+	file.seekg(fileHeader.bfOffBits, ios::beg);							 // меняет позицию в потоке 
+	rowSize_ = (fileInfo.biWidth * fileInfo.biBitCount + 31) / 32 * 4;   // подсчитываем длину страйда (округление до 32 бита)
 
-	data.resize(rowSize_ * fileInfo.biHeight);
+	data.resize(rowSize_ * fileInfo.biHeight);							 // выделяем память для данных
 
-	file.read(reinterpret_cast<char*>(data.data()), data.size());
-	//std::copy(data1.begin(), data1.end(), data.begin());
+	file.read(reinterpret_cast<char*>(data.data()), data.size());		 // записываем данные в буфер
 
 	file.close();
 }
+/**
+* Метод отрисовки BMP файла
+* за исходные данные берет данные из структур класса
+*/
 
 void BMPFile::displayBMP() const
 {
@@ -57,7 +65,7 @@ void BMPFile::displayBMP() const
 		for (int x = 0; x < fileInfo.biWidth; ++x)
 		{
 			int pxlOffset = i * rowSize_ + x * (fileInfo.biBitCount / 8);
-			//cout << pxlOffset << " ";
+			
 			uint8_t blue = data[pxlOffset];
 			uint8_t green = data[pxlOffset + 1];
 			uint8_t red = data[pxlOffset + 2];
@@ -76,7 +84,10 @@ void BMPFile::displayBMP() const
 		cout << endl;
 	}
 }
-
+/**
+* Метод чистки памяти
+* ()
+*/
 void BMPFile::closeBMP()
 {
 }

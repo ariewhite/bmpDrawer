@@ -4,6 +4,7 @@
 #include "fstream"
 #include "filesystem"
 #include "ios"
+//#include "memory"
 #include "Windows.h"
 
 //typedef uint16_t WORD;
@@ -21,11 +22,12 @@ public:
 	void closeBMP();
 
 private:
-	const string filePath_;
 
-#pragma pack(push, 1)
+#pragma pack(push, 1)				 // отключаем выравнивание памяти
 	struct BMPFileHeader
 	{
+		BMPFileHeader() {}
+		~BMPFileHeader() {}
 		uint16_t bfType{0x4D42};	 // сигнатура формата
 		uint32_t bfSize{0};			 // размер файла
 		uint16_t bfReserved1{0};     // "Зануленная" зарезервированная память
@@ -58,12 +60,11 @@ private:
 	};
 	
 #pragma pack(pop)
-
-	BMPFileHeader  fileHeader;
-	BMPInfo        fileInfo;
-	BMPColorHeader colorHeader;
+	
+	BMPFileHeader   fileHeader;
+	BMPInfo         fileInfo;
+	BMPColorHeader  colorHeader;
 
 	vector<uint8_t> data;
-
-	int rowSize_;
+	int             rowSize_;
 };
