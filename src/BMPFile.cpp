@@ -15,10 +15,6 @@ BMPFile::~BMPFile()
 */
 void BMPFile::openBMP(const string& fileName)
 {
-	if (!filesystem::exists(fileName)) {							 
-		throw runtime_error("File not exist!");
-	}
-
 	fstream file(fileName, ios::in | ios::binary);		   // явно указываем, что хотим "читать файл как бинарный"
 
 	if (!file.is_open()){
@@ -85,8 +81,7 @@ void BMPFile::displayBMP() const
 	}
 }
 /**
-* Метод чистки памяти
-* ()
+* 
 */
 void BMPFile::closeBMP()
 {

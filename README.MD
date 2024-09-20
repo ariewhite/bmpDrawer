@@ -22,3 +22,6 @@ unix*
 > make
 
 (remove include windows.h)
+
+github repo:
+https://github.com/ariewhite/bmpDrawer
