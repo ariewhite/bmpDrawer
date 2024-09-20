@@ -91,3 +91,19 @@ void BMPFile::displayBMP() const
 void BMPFile::closeBMP()
 {
 }
+
+uint32_t BMPFile::getW() const
+{
+	return fileInfo.biWidth;
+}
+
+uint32_t BMPFile::getH() const
+{
+	return fileInfo.biHeight;
+}
+
+uint32_t BMPFile::getOff() const
+{
+	return fileHeader.bfOffBits;
+}
+

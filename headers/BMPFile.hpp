@@ -69,6 +69,18 @@ private:
 
 	vector<uint8_t> data;
 	int             rowSize_;
+
+	/*
+		Несколько геттеров для проведения тестов
+	*/
+public: 
+	
+	uint32_t getW() const;
+
+	uint32_t getH() const;
+
+	uint32_t getOff() const;
+
 };
 
 #endif // !BMPFile_H
