@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 	}
 	std::string path = argv[1];
 
-	for (size_t i = 0; i < path.length(); ++i)
+	for (size_t i = 0; i < path.length(); ++i)   // экранируем \ 
 	{
 		if (path[i] == '\\')
 		{
@@ -27,12 +27,11 @@ int main(int argc, char** argv)
 		}
 	}
 
-	cout << "file path - " << path << endl;
+	cout << "File path - " << path << endl;
 	
 	BMPFile b;
 	b.openBMP(path);
 	b.displayBMP();
-	b.closeBMP();
 	
 	return 0;
 }

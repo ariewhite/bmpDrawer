@@ -1,4 +1,6 @@
-﻿#include "iostream"
+﻿#ifndef BMPFile_H
+#define bmpPicturePrinter_H
+#include "iostream"
 #include "string"
 #include "vector"
 #include "fstream"
@@ -68,3 +70,5 @@ private:
 	vector<uint8_t> data;
 	int             rowSize_;
 };
+
+#endif // !BMPFile_H
